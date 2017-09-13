@@ -18,13 +18,16 @@ trap _term SIGTERM
 # Set SIGKILL handler
 trap _kill SIGKILL
 
+# wait for DB to come up 
+echo "Waiting for database to be available..."
+while ! nc database 1521 < /dev/null; do sleep 9; done
+# sleep for some extra time for db setup
+sleep 30
+
 DOMAIN_HOME=/u01/oracle/domains/base_domain 
 
 # Start Admin Server and tail the logs
-${DOMAIN_HOME}/startWebLogic.sh
-touch ${DOMAIN_HOME}/servers/AdminServer/logs/AdminServer.log
-tail -f ${DOMAIN_HOME}/servers/AdminServer/logs/AdminServer.log &
-
+${DOMAIN_HOME}/startWebLogic.sh &
 childPID=$!
 wait $childPID
 
