@@ -5,4 +5,5 @@ RUN curl -o /tmp/maven.tar.gz http://mirror.cogentco.com/pub/apache/maven/maven-
 RUN tar xzvf /tmp/maven.tar.gz -C /u01/oracle
 COPY createDomain.sh /u01/oracle/createDomain.sh
 COPY entrypoint.sh /u01/oracle/entrypoint.sh
+COPY .bashrc /root/.bashrc
 ENTRYPOINT /bin/bash
